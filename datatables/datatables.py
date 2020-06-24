@@ -122,7 +122,8 @@ class DataTables:
 
         # add columns to query
         query = query.add_columns(*[c.sqla_expr for c in self.columns])
-
+        print(query)
+        
         # fetch the result of the queries
         column_names = [
             col.mData if col.mData else str(i)
