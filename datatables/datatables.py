@@ -31,6 +31,7 @@ class DataTables:
                 'Legacy datatables not supported, upgrade to >=1.10')
         self.query = query
         self.columns = columns
+        self.row_count = row_count
         self.results = None
         self.allow_regex_searches = allow_regex_searches
 
@@ -91,7 +92,7 @@ class DataTables:
         query = self.query
 
         # count before filtering
-        self.cardinality = row_count
+        self.cardinality = self.row_count
 
         self._set_column_filter_expressions()
         self._set_global_filter_expression()
@@ -102,7 +103,7 @@ class DataTables:
         query = query.filter(
             *[e for e in self.filter_expressions if e is not None])
 
-        self.cardinality_filtered = row_count
+        self.cardinality_filtered = self.row_count
 
         # apply sorts
         query = query.order_by(
