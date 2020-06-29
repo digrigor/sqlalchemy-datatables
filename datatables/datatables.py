@@ -23,7 +23,7 @@ class DataTables:
     :returns: a DataTables object
     """
 
-    def __init__(self, request, query, columns, allow_regex_searches=False):
+    def __init__(self, request, query, columns, row_count, allow_regex_searches=False):
         """Initialize object and run the query."""
         self.params = dict(request)
         if 'sEcho' in self.params:
@@ -91,7 +91,7 @@ class DataTables:
         query = self.query
 
         # count before filtering
-        self.cardinality = query.add_columns(self.columns[0].sqla_expr).count()
+        self.cardinality = row_count
 
         self._set_column_filter_expressions()
         self._set_global_filter_expression()
@@ -102,8 +102,7 @@ class DataTables:
         query = query.filter(
             *[e for e in self.filter_expressions if e is not None])
 
-        self.cardinality_filtered = query.add_columns(
-            self.columns[0].sqla_expr).count()
+        self.cardinality_filtered = row_count
 
         # apply sorts
         query = query.order_by(
