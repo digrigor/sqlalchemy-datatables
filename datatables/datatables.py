@@ -122,7 +122,7 @@ class DataTables:
 
         # add columns to query
         query = query.add_columns(*[c.sqla_expr for c in self.columns])
-        print(query)
+        print('query columns added')
         
         # fetch the result of the queries
         column_names = [
@@ -132,6 +132,7 @@ class DataTables:
         self.results = [{k: v
                          for k, v in zip(column_names, row)}
                         for row in query.all()]
+        print('query results fetched')
 
     def _set_column_filter_expressions(self):
         """Construct the query: filtering.
